@@ -1,0 +1,41 @@
+{
+  "name": "@driftgate/cli",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "DriftGate CLI for canonical V4 session and execution workflows.",
+  "license": "Apache-2.0",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "driftgate": "./dist/index.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "src",
+    "README.md"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/driftgate/driftgate-cli.git"
+  },
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --target node20 --platform node --dts --sourcemap --clean --tsconfig tsconfig.build.json && node -e \"const fs=require('fs');const p='dist/index.js';const s=fs.readFileSync(p,'utf8');if(!s.startsWith('#!/usr/bin/env node'))fs.writeFileSync(p,'#!/usr/bin/env node\\n'+s);\"",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@driftgate/sdk": "workspace:*",
+    "@driftgate/workflow-compiler": "workspace:*"
+  }
+}
